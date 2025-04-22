@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Livro {
+  id              Int              @id @default(autoincrement())
+  titulo          String
+  preco           Float
+  tipo            TipoLivro
+  estoque         Int?
+  frete           Float?
+  tamanhoArquivo  Float?
+
+  editoraId       Int?
+  editora         Editora?          @relation(fields: [editoraId], references: [id])
+
+  categorias      LivroCategoria[]
+  autores         LivroAutor[]
+  vendas          LivroVenda[]
+}
+
+model Editora {
+  id    Int     @id @default(autoincrement())
+  nome  String
+  livros Livro[]
+}
+
+model Autor {
+  id     Int     @id @default(autoincrement())
+  nome   String
+  livros LivroAutor[]
+}
+
+model Categoria {
+  id     Int     @id @default(autoincrement())
+  nome   String
+  livros LivroCategoria[]
+}
+
+model Venda {
+  id         Int           @id @default(autoincrement())
+  nome       String
+  valorTotal Float
+  data       DateTime
+  livros     LivroVenda[]
+}
+
+model LivroCategoria {
+  id          Int       @id @default(autoincrement())
+  livroId     Int
+  categoriaId Int
+  livro       Livro     @relation(fields: [livroId], references: [id])
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+}
+
+model LivroAutor {
+  id       Int     @id @default(autoincrement())
+  livroId  Int
+  autorId  Int
+  livro    Livro   @relation(fields: [livroId], references: [id])
+  autor    Autor   @relation(fields: [autorId], references: [id])
+}
+
+model LivroVenda {
+  id        Int     @id @default(autoincrement())
+  livroId   Int
+  vendaId   Int
+  preco     Float
+  quantidade Int
+  livro     Livro   @relation(fields: [livroId], references: [id])
+  venda     Venda   @relation(fields: [vendaId], references: [id])
+}
+
+enum TipoLivro {
+  IMPRESSO
+  ELETRONICO
+}
