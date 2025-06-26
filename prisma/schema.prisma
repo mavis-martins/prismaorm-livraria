@@ -15,10 +15,9 @@ model Livro {
   estoque         Int?
   frete           Float?
   tamanhoArquivo  Float?
-
   editoraId       Int?
-  editora         Editora?          @relation(fields: [editoraId], references: [id])
 
+  editora         Editora?          @relation(fields: [editoraId], references: [id])
   categorias      LivroCategoria[]
   autores         LivroAutor[]
   vendas          LivroVenda[]

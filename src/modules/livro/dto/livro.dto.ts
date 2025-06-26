@@ -23,7 +23,7 @@ export enum TipoLivro {
   
     @IsNumber()
     @IsOptional()
-    frete: number;
+    frete?: number;
   
     @IsOptional()
     @IsNumber()

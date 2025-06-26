@@ -4,7 +4,7 @@ import { LivroCategoriaService } from './livro-categoria.service';
 import { CreateLivroCategoriaDto } from './dto/livroCategoria.dto';
 
 
-@Controller('livrod-categorias')
+@Controller('livros-categorias')
 export class LivroCategoriaController {
     constructor(private readonly service: LivroCategoriaService) {}
   
